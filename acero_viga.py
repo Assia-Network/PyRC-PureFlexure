@@ -292,23 +292,23 @@ try:
     # Streamlit
     b64=base64.b64encode(pdf_bytes).decode()
     st.markdown(f"""
-        <style>
-        .pdf-container {{
-            position: relative;
-            width: 100%;
-            height: 100vh; /* Ocupa todo el alto visible */
-            overflow: hidden;
-        }}
-        .pdf-container iframe {{
-            width: 100%;
-            height: 100%;
-            border: none;
-        }}
-        </style>
-        <div class="pdf-container">
-            <iframe src="data:application/pdf;base64,{b64}"></iframe>
-        </div>
-        """, unsafe_allow_html=True)
+    <style>
+    .pdf-container {{
+        width: 100%;
+        height: 100vh;
+    }}
+    </style>
+    <div class="pdf-container">
+        <object 
+            data="data:application/pdf;base64,{b64}" 
+            type="application/pdf" 
+            width="100%" 
+            height="100%">
+            <p>Tu navegador no permite visualizar este PDF directamente. 
+            <a href="data:application/pdf;base64,{b64}" download="reporte.pdf">Descárgalo aquí</a>.</p>
+        </object>
+    </div>
+    """,  unsafe_allow_html=True)
 
 except:
     st.error("❌ Ocurrió un error: La sección de la Viga es insuficiente o supera la cuantia máxima.")
