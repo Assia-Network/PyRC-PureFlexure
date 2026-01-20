@@ -1,4 +1,4 @@
-# Viga-Flexion-Pura 
+# PyRC-PureFlexure
 
 **Herramienta de automatización para el diseño y verificación de vigas de concreto reforzado sometidas a flexión pura.**
 
