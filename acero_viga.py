@@ -270,7 +270,7 @@ try:
     pmax=coef_pbal_real*pb
 
     if pmax < p_dise:
-        st.error("❌ Se debe diseñar doblemente armado, forzando a no continuar...")
+        st.error("❌ Se debe diseñar doblemente armado, forzando a no continuar ...")
         raise ValueError("Se debe diseñar doblemente armado, forzando a no continuar.")  #Siguiente version
 
     # Reporte
