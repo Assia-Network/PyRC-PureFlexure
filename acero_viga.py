@@ -228,6 +228,11 @@ else:
         </div>
         """, unsafe_allow_html=True)
 
+
+# Info de error
+
+info_error = 0
+
 # Diseño
 try:
     peralte = d
@@ -270,7 +275,14 @@ try:
     pmax=coef_pbal_real*pb
 
     if pmax < p_dise:
-        st.error("❌ Se debe diseñar doblemente armado, forzando a no continuar ...")
+        st.markdown("""
+        <div class="assiafb-alert">
+        <p><strong>❌ Advertencia:</strong> Se debe diseñar doblemente armado o aumentar las dimensiones de la sección, forzando a no continuar ... </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        info_error = 1
+
         raise ValueError("Se debe diseñar doblemente armado, forzando a no continuar.")  #Siguiente version
 
     # Reporte
@@ -315,5 +327,9 @@ try:
     """,  unsafe_allow_html=True)
 
 except:
-    if pmax >= p_dise:
-        st.error("❌ Ocurrió un error: La sección de la Viga es insuficiente")
+    if info_error == 0:
+        st.markdown("""
+        <div class="assiafb-alert">
+        <p><strong>❌ Ocurrió un error:</strong> La sección de la Viga es insuficiente o el momento ultimo es demasiado grande</p>
+        </div>
+        """, unsafe_allow_html=True)
