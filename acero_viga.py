@@ -21,7 +21,7 @@ st.set_page_config(
 # Función para cargar CSS externo
 def load_css(file_name):
     try:
-        with open(file_name) as f:
+        with open(file_name, encoding='utf-8') as f:
             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
     except FileNotFoundError:
         st.error(f"No se encontró el archivo de estilos: {file_name}")
@@ -368,7 +368,10 @@ try:
         # Espacio vertical
         st.markdown("<div style='height: 15px;'></div>", unsafe_allow_html=True)
 
-except:
+        # print
+        print("\nSe ha generado el reporte y adicionalmente se ha generado un archivo .tex - .log - .out \n en la carpeta donde esta corriendo el programa\n")
+
+except Exception as e:
     if info_error == 0:
         st.markdown("""
         <div class="assiafb-alert">
