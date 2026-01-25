@@ -25,3 +25,5 @@ El algoritmo optimiza la ubicación de las barras respetando rigurosamente el es
 
 ---
 *Desarrollado para facilitar el flujo de trabajo en el diseño de elementos de concreto reforzado.*
+
+[![Descargar App](https://img.shields.io/badge/DESCARGAR_APP-Linux_Ubuntu-39ff14?style=for-the-badge&logo=linux&logoColor=black)](https://github.com/Assia-Network/PyRC-PureFlexure/releases/download/Downloads/linux_PyRC-PureFlexure.zip)
