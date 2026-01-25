@@ -317,3 +317,60 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]>div:focus-within {
     border-color: #5DADE2 !important;
     box-shadow: 0 0 6px rgba(93, 173, 226, 0.5) !important;
 }
+
+/* ESTILO PERSONALIZADO PARA LOS BOTONES DE DESCARGA */
+
+[data-testid="stBaseButton-secondary"] {
+    /* DISEÑO VISUAL */
+    background-color: #0056b3 !important;
+    /* Azul Ingeniería */
+    color: #ffffff !important;
+    /* Texto Blanco */
+    border: 2px solid #004494 !important;
+    border-radius: 12px !important;
+    padding: 20px 25px !important;
+
+    /* TIPOGRAFÍA (Más gruesa) */
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    /* <--- AQUI ESTA LA NEGRITA EXTRA */
+    letter-spacing: 1px !important;
+    /* Un poco de espacio para leer mejor */
+    text-transform: uppercase !important;
+    /* Opcional: Mayúsculas se ven más "botón" */
+
+    /* ALINEACIÓN Y CENTRADO (Clave para que no se vea chueco) */
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    /* Centra horizontalmente el contenido */
+    align-items: center !important;
+    /* Centra verticalmente el contenido */
+    text-align: center !important;
+    margin: 0 auto !important;
+    /* Asegura que el botón flote al centro */
+
+    /* ANIMACIÓN */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ESTADO HOVER (Ratón encima) */
+[data-testid="stBaseButton-secondary"]:hover {
+    background-color: #004494 !important;
+    border: 2px solid #39ff14 !important;
+    /* Borde Verde Neón */
+    color: #ffffff !important;
+    box-shadow: 0 0 20px #39ff14, inset 0 0 5px #39ff14 !important;
+    /* Brillo más fuerte */
+    transform: scale(1.05) !important;
+    /* Zoom */
+    z-index: 999 !important;
+}
+
+/* ESTADO ACTIVE (Clic) */
+[data-testid="stBaseButton-secondary"]:active {
+    transform: scale(0.98) !important;
+    box-shadow: none !important;
+}

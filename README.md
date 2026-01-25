@@ -14,7 +14,7 @@ El algoritmo optimiza la ubicación de las barras respetando rigurosamente el es
 * **Distribución Automática de Acero:** Algoritmo inteligente que coloca las varillas en la sección transversal respetando el recubrimiento y la separación normativa ($S_{libre} \geq \max(1", d_b)$).
 * **Visualización Gráfica:** Generación automática de diagramas de la sección transversal de la viga con la disposición real de los aceros (usando Matplotlib).
 * **Reportes Técnicos en PDF:** Exportación directa de una memoria de cálculo profesional en LaTeX, integrando ecuaciones, datos de entrada y gráficos generados.
-* **Verificación de Seguridad:** Comprobación automática de que el área de acero proporcionada ($A_{s,prov}$) cubre la demanda ($A_{s,req}$).
+* **Verificación de Seguridad:** Comprobación automática de que el área de acero proporcionada ($A_{s,prop}$) cubre la demanda ($A_{s,req}$).
 
 ## Tecnologías Utilizadas
 

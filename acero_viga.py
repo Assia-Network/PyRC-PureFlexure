@@ -9,6 +9,7 @@ import io
 import subprocess, base64
 import utils as ut
 from PIL import Image, ImageOps
+import os
 
 # Configuración de página
 st.set_page_config(
@@ -25,8 +26,17 @@ def load_css(file_name):
     except FileNotFoundError:
         st.error(f"No se encontró el archivo de estilos: {file_name}")
 
+def obtener_ruta_recurso(ruta_relativa):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, ruta_relativa)
+
 # Cargar el CSS desde la carpeta style
-load_css("style/style.css")
+archivo_css = obtener_ruta_recurso("style/style.css")
+load_css(archivo_css)
 
 # TITULO
 st.markdown("""
@@ -64,7 +74,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Datos de entrada
-st.markdown("<div class='section-title'>Ingresar parámetros:</div>", unsafe_allow_html=True)
+st.markdown(f"<div class='section-title'>{'Ingresar parámetros'.upper()}:</div>", unsafe_allow_html=True)
 
 # CAJAS NUMERICAS DE TEXTO
 with st.expander("", expanded=True):
@@ -145,6 +155,8 @@ with st.expander("", expanded=True):
         coef_pbal = st.selectbox("Tipo de diseño", ["Comunes", "Esenciales"])
     with col3:
         escala_imagen = st.number_input("Escala de la imagen", min_value=0.0001, step=0.001, value=0.8, format='%.3f')
+
+st.markdown(f"<div class='section-title'>{'Vista transversal'.upper()}:</div>", unsafe_allow_html=True)
 
 # Numero de varillas a lista
 n_por_capa_list = list(map(int, re.findall(r"\d+\.?\d*", n_por_capa_txt)))
@@ -228,6 +240,11 @@ else:
         </div>
         """, unsafe_allow_html=True)
 
+
+# Info de error
+
+info_error = 0
+
 # Diseño
 try:
     peralte = d
@@ -270,14 +287,18 @@ try:
     pmax=coef_pbal_real*pb
 
     if pmax < p_dise:
-        st.error("❌ Se debe diseñar doblemente armado, forzando a no continuar...")
+        st.markdown("""
+        <div class="assiafb-alert">
+        <p><strong>❌ Advertencia:</strong> Se debe diseñar doblemente armado o aumentar las dimensiones de la sección, forzando a no continuar ... </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        info_error = 1
+
         raise ValueError("Se debe diseñar doblemente armado, forzando a no continuar.")  #Siguiente version
 
     # Reporte
-    ty2="Reporte".upper()
-    st.markdown(
-        f"<div style='font-weight:bold; color:#2E86C1; font-size:24px;'>{ty2}</div>",
-        unsafe_allow_html=True)
+    st.markdown("<div class='section-title'>REPORTE:</div>", unsafe_allow_html=True)
 
     # FUNCTION
     latex = ut.generar_reporte_viga((nombre_archivo, escala_imagen, varillas_totales), etiqueta_v, autor, f_c, f_y, Es, b, h, ecu, diame_long, diame_estr, r_L, coef_pbal, Mu_dis, Mu, peralte, ps, p_min, p_min_final, beta1, pb, coef_pbal_real, pmax, p_dise)
@@ -314,6 +335,43 @@ try:
     </div>
     """,  unsafe_allow_html=True)
 
+    # Descarga
+    st.markdown(f"<div class='section-title'>{'Descarga'.upper()}:</div>", unsafe_allow_html=True)
+
+    # Botones
+
+    # Usamos columnas para controlar el ancho de los botones (opcional, para estética)
+    col_spacer1, col_btn, col_spacer2 = st.columns([1, 1, 1])
+
+    with col_btn:
+        # 1. Botón PDF
+        st.download_button(
+            label="📄 Descargar Reporte PDF",
+            data=pdf_bytes,
+            file_name="Reporte_Estructural_NUMStruct.pdf",
+            mime="application/pdf",
+            key="btn_download_pdf"
+        )
+
+        # Espacio vertical
+        st.markdown("<div style='height: 15px;'></div>", unsafe_allow_html=True)
+
+        # 2. Botón LaTeX
+        st.download_button(
+            label="📝 Descargar Fuente LaTeX",
+            data=latex,
+            file_name="Reporte_Estructural_NUMStruct.tex",
+            mime="text/plain",
+            key="btn_download_tex"
+        )
+
+        # Espacio vertical
+        st.markdown("<div style='height: 15px;'></div>", unsafe_allow_html=True)
+
 except:
-    if pmax >= p_dise:
-        st.error("❌ Ocurrió un error: La sección de la Viga es insuficiente")
+    if info_error == 0:
+        st.markdown("""
+        <div class="assiafb-alert">
+        <p><strong>❌ Ocurrió un error:</strong> La sección de la Viga es insuficiente o el momento ultimo es demasiado grande</p>
+        </div>
+        """, unsafe_allow_html=True)
